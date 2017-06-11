@@ -24,6 +24,27 @@ class WorldTour extends Component {
     });
   }
 
+  handleItemEnter = (place) => {
+    this.setState({place: place.image});
+  }
+
+  renderMenuItems = () => {
+    return (
+      <View style={styles.menu}>
+        {places.map((place, i) => {
+          return (
+            <View
+              onEnter={() => this.handleItemEnter(place)}
+              style={styles.menuItem}
+              key={i}>
+              <Text style={styles.menuItemText}>{place.title}</Text>
+            </View>
+          )
+        })}
+      </View>
+    );
+  }
+
   render() {
     return (
       <View>
@@ -37,18 +58,7 @@ class WorldTour extends Component {
         </View>
         {
           this.state.showMenu
-            ? <View style={styles.menu}>
-                {places.map((place, i) => {
-                  return (
-                    <View
-                      onEnter={() => this.setState({place: place.image})}
-                      style={styles.menuItem}
-                      key={i}>
-                      <Text style={styles.menuItemText}>{place.title}</Text>
-                    </View>
-                  )
-                })}
-              </View>
+            ? this.renderMenuItems()
             : <View />
         }
       </View>
